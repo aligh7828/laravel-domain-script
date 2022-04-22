@@ -1,9 +1,3 @@
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 # create domain for create laravel project (Apache)
 
 create laravel project with virtual domain on apache web server
