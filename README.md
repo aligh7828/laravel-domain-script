@@ -1,4 +1,9 @@
 
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
 # create domain for create laravel project (Apache)
 
 create laravel project with virtual domain on apache web server
@@ -27,7 +32,12 @@ after that , run below code.
 
 ## Congratulation
 
-You Have Finally a command to use it :D
+you can use 
+
+```bash
+laravel ProjectName
+```
+to have finaly a laravel project.
 
 have fun , follow and share :D
 ## Support
