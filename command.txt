@@ -1,0 +1,28 @@
+function laravel() {
+cd /var/www;
+
+composer create-project --prefer-dist laravel/laravel $1;
+
+sudo chmod 777 -R /var/www/$1;
+
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$1.conf
+
+echo "<VirtualHost *:80>
+    ServerAdmin admin@$1
+    ServerName $1
+    ServerAlias www.$1
+    DocumentRoot /var/www/$1/public
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>" | sudo tee /etc/apache2/sites-available/$1.conf
+
+sudo a2ensite $1.conf
+
+sudo systemctl restart apache2
+
+echo "127.0.0.1 $1"  | sudo tee -a /etc/hosts
+
+cd $PWD/$1;
+
+php artisan key:generate --ansi;
+}
