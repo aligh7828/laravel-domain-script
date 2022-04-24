@@ -1,28 +1,99 @@
-function laravel() {
-cd /var/www;
+function laravel.aligh() {
+    # Nothing
+    printf "\n\n${BIYellow} ----------------------------------------------------------------- ${NC} \n\n"
 
-composer create-project --prefer-dist laravel/laravel $1;
+    # Nothing
+    printf "\n\n *************** Welcome to Ali.gh Laravel Project Starter ${Red} v0.2 (BETA) ${NC}  ***************\n\n"
 
-sudo chmod 777 -R /var/www/$1;
+    # Nothing
+    printf "${BIYellow} ----------------------------------------------------------------- ${NC} \n\n"
 
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$1.conf
+    # Nothing
+    read -r -p " Enter Project PATH (write 'Default' for default (/var/www) route or write some route or use 'this' for this route ) : " PROJECTPATH
 
-echo "<VirtualHost *:80>
-    ServerAdmin admin@$1
-    ServerName $1
-    ServerAlias www.$1
-    DocumentRoot /var/www/$1/public
+    # Check Project Path
+    if [ $PROJECTPATH == "Default" ]; then
+        # if body
+        printf "\n ${BIPurple} Project PATH : ${BIGreen} /var/www ${NC}\n\n"
+        PROJECTPATH="/var/www"
+    elif [ $PROJECTPATH == "this" ]; then
+        # elif body
+        printf "\n ${BIPurple} Project PATH : ${BIGreen} $PWD ${NC}\n\n"
+        PROJECTPATH=$PWD
+    else
+        # else body
+        if [ -d $PROJECTPATH ]; then
+            printf "\n ${BIPurple} Project PATH : ${BIGreen} $PROJECTPATH ${NC}\n\n"
+        else
+            printf "\n ${BIRed} ERROR: Route not found... Default Route Set! ${BIPurple} Project PATH : ${BIGreen} /var/www ${NC}\n\n"
+            PROJECTPATH="/var/www"
+        fi
+    fi
+
+    cd $PROJECTPATH
+
+    # Get Project Name
+    read -p " Enter Project Name: " PROJECTNAME
+
+    # Show Project Name
+    printf "\n ${BIPurple} Project Name ${NC}: ${BIGreen} $PROJECTNAME ${NC}\n\n"
+
+    read -p " Enter Virtual Domain: " VIRTUALDOMAIN
+
+    printf "\n\n ${BIPurple}Virtual Domain ${NC}: ${BIGreen} $VIRTUALDOMAIN ${NC} \n\n ${BIYellow}----------------------------------------------------------------- ${NC}\n\n"
+
+    read -p " Enter DB Name: " DBNAME
+
+    printf "\n ${BIPurple} DB Name ${NC}: ${BICyan}$DBNAME ${NC} \n\n"
+
+    read -p " Enter User Name: " USERNAME
+
+    printf "\n ${BIPurple} User Name ${NC}: ${BICyan}$USERNAME ${NC} \n\n"
+
+    read -s -p " Enter Password : " PASSWORD
+
+    printf "\n\n ${BIBlue} Waiting For Installing ${NC} \n"
+
+    printf "\n ${BIYellow} -------------------- ${NC} \n"
+
+    #mysql -u USERNAME -p DBNAME $PASSWORD
+
+    composer create-project --prefer-dist laravel/laravel $PROJECTNAME
+
+    sudo chmod 777 -R $PROJECTPATH/$PROJECTNAME
+
+    sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$VIRTUALDOMAIN.conf
+
+    echo "<VirtualHost *:80>
+      ServerAdmin admin@$VIRTUALDOMAIN
+      ServerName $VIRTUALDOMAIN
+     ServerAlias www.$VIRTUALDOMAIN
+    DocumentRoot $PROJECTPATH/$PROJECTNAME/public
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>" | sudo tee /etc/apache2/sites-available/$1.conf
+    </VirtualHost>" | sudo tee /etc/apache2/sites-available/$VIRTUALDOMAIN.conf
 
-sudo a2ensite $1.conf
+    sudo a2ensite $VIRTUALDOMAIN.conf
 
-sudo systemctl restart apache2
+    sudo systemctl restart apache2
 
-echo "127.0.0.1 $1"  | sudo tee -a /etc/hosts
+    echo "127.0.0.1 $VIRTUALDOMAIN" | sudo tee -a /etc/hosts
 
-cd $PWD/$1;
+    cd $PWD/$PROJECTNAME
 
-php artisan key:generate --ansi;
+    php artisan key:generate --ansi
+
+    sed -i "s/APP_NAME=Laravel/APP_NAME=$PROJECTNAME/" .env
+
+    sed -i "s/DB_DATABASE=laravel/DB_DATABASE=$DBNAME/" .env
+
+    sed -i "s/DB_USERNAME=root/DB_USERNAME=$USERNAME/" .env
+
+    sed -i "s/DB_PASSWORD=/DB_PASSWORD=$PASSWORD/" .env
+
+    code .
+
+    google-chrome $VIRTUALDOMAIN
+
+    exit
 }
