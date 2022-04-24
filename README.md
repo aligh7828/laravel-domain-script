@@ -29,7 +29,7 @@ after that , run below code.
 you can use 
 
 ```bash
-laravel ProjectName
+makeLaravel
 ```
 to have finaly a laravel project.
 
