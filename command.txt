@@ -1,9 +1,9 @@
-function laravel.aligh() {
+function makeLaravel() {
     # Nothing
     printf "\n\n${BIYellow} ----------------------------------------------------------------- ${NC} \n\n"
 
     # Nothing
-    printf "\n\n *************** Welcome to Ali.gh Laravel Project Starter ${Red} v0.2 (BETA) ${NC}  ***************\n\n"
+    printf "\n\n *************** Welcome to github.com/de-aligh Laravel Project Starter ${Red} v0.2 (BETA) ${NC}  ***************\n\n"
 
     # Nothing
     printf "${BIYellow} ----------------------------------------------------------------- ${NC} \n\n"
