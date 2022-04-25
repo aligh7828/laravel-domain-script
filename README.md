@@ -8,10 +8,14 @@ create laravel project with virtual domain on apache web server
 
 To use this, first download the command.txt file from this github project.
 
+then edit ~/.bashrc file with editor (vim , nano , vscode , gedit , ...)
+
+( for example nano )
+
 ## Step #2
 
 ```bash
-  sudo ~/.bashrc
+  nano ~/.bashrc
 ```
 
 ## Step #3
